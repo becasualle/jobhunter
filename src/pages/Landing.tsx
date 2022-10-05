@@ -1,7 +1,6 @@
-import React from 'react'
-import logo from '../assets/images/logo.svg';
 import main from '../assets/images/main.svg';
 import styled from "styled-components";
+import { Logo } from '../components';
 
 type Props = {}
 
@@ -9,7 +8,7 @@ const Landing = (props: Props) => {
     return (
         <Wrapper>
             <nav>
-                <img src={logo} alt="jobhunter logo" className='logo' />
+                <Logo />
             </nav>
             <div className="container page">
                 <div className="info">
@@ -38,6 +37,11 @@ const Wrapper = styled.main`
         display: grid;
         align-items: center;
         margin-top:-3rem;
+
+        @media (min-width: 992px){
+            grid-template-columns: 1fr 1fr;
+            column-gap: 3rem;
+        }
     }
     
     h1 {
@@ -54,15 +58,7 @@ const Wrapper = styled.main`
 
     .main-img {
         display: none;
-    }
-
-    @media (min-width: 992px){
-        .page {
-            grid-template-columns: 1fr 1fr;
-            column-gap: 3rem;
-        }
-
-        .main-img {
+        @media (min-width: 992px){
             display: block;
         }
     }
