@@ -1,6 +1,7 @@
+import Landing from "./pages/Landing";
 const App = () => {
   return (
-    <h1>Jobhunter</h1>
+    <Landing />
   );
 }
 
