@@ -1,6 +1,7 @@
 import main from '../assets/images/main.svg';
 import styled from "styled-components";
 import { Logo } from '../components';
+import { Link } from 'react-router-dom';
 
 type Props = {}
 
@@ -14,7 +15,7 @@ const Landing = (props: Props) => {
                 <div className="info">
                     <h1>job <span>tracking</span> app</h1>
                     <p>Messenger bag air plant shoreditch tumblr lo-fi keytar lyft, pitchfork activated charcoal gluten-free street art twee tbh normcore. Disrupt hell of thundercats quinoa, activated charcoal salvia photo booth master cleanse tattooed put a bird on it pitchfork kitsch vice. </p>
-                    <button className="btn btn-hero">Login/Register</button>
+                    <Link to='/register' className="btn btn-hero">Login/Register</Link>
                 </div>
                 <img src={main} alt="job hunt" className='img main-img' />
             </div>
