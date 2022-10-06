@@ -73,7 +73,7 @@ const Register = (props: Props) => {
         />
 
         <button type="submit" className="btn btn-block" disabled={isLoading}>
-          submit
+          {isLoading ? "loading..." : "submit"}
         </button>
 
         <p>

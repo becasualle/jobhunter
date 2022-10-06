@@ -40,7 +40,17 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (user: User, thunkApi) => {
-    console.log(`Login User: ${JSON.stringify(user)}`);
+    try {
+      const response = await customFetch.post("/auth/login", user);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError<{ msg: string }>;
+      const {
+        data: { msg },
+      } = err.response!;
+      return thunkApi.rejectWithValue(msg);
+    }
   }
 );
 
@@ -53,12 +63,24 @@ export const userSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state, { payload: user }) => {
+      .addCase(registerUser.fulfilled, (state, { payload: { user } }) => {
         state.isLoading = false;
         state.user = user;
         toast.success(`Hello There ${user.name}`);
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload as string);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload: { user } }) => {
+        state.isLoading = false;
+        state.user = user;
+        toast.success(`Welcome back  ${user.name}`);
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload as string);
       });
