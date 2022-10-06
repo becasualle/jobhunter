@@ -23,7 +23,8 @@ export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (user: User, thunkApi) => {
     try {
-      const response = await customFetch.post("/auth/testingRegister");
+      const response = await customFetch.post("/auth/register", user);
+      return response.data;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
 
@@ -31,7 +32,7 @@ export const registerUser = createAsyncThunk(
         data: { msg },
       } = err.response!;
 
-      toast.error(msg);
+      return thunkApi.rejectWithValue(msg);
     }
   }
 );
@@ -47,6 +48,21 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload: user }) => {
+        state.isLoading = false;
+        state.user = user;
+        toast.success(`Hello There ${user.name}`);
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload as string);
+      });
+  },
 });
 
 export default userSlice.reducer;
