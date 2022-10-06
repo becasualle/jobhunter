@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Logo } from "../components";
+import { Logo, FormRow } from "../components";
 import styled from "styled-components";
 
 type Props = {};
@@ -28,20 +28,24 @@ const Register = (props: Props) => {
       <form className="form" onSubmit={handleSubmit}>
         <Logo />
         <h3>Login</h3>
-
-        <div className="form-row">
-          <label htmlFor="name" className="form-label">
-            name
-          </label>
-          <input
-            type="text"
-            value={values.name}
-            name="name"
-            id="name"
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+        <FormRow
+          type="text"
+          name="name"
+          handleChange={handleChange}
+          value={values.name}
+        />
+        <FormRow
+          type="email"
+          name="email"
+          handleChange={handleChange}
+          value={values.email}
+        />
+        <FormRow
+          type="password"
+          name="password"
+          handleChange={handleChange}
+          value={values.password}
+        />
 
         <button type="submit" className="btn btn-block">
           submit
