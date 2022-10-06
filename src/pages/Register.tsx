@@ -23,17 +23,24 @@ const Register = (props: Props) => {
     console.log(e.target);
   };
 
+  const toggleMember = () => {
+    setValues({ ...values, isMember: !values.isMember });
+  };
+
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={handleSubmit}>
         <Logo />
-        <h3>Login</h3>
-        <FormRow
-          type="text"
-          name="name"
-          handleChange={handleChange}
-          value={values.name}
-        />
+        <h3>{values.isMember ? "Login" : "Register"}</h3>
+        {/* Not display name field for registered user */}
+        {!values.isMember && (
+          <FormRow
+            type="text"
+            name="name"
+            handleChange={handleChange}
+            value={values.name}
+          />
+        )}
         <FormRow
           type="email"
           name="email"
@@ -50,6 +57,13 @@ const Register = (props: Props) => {
         <button type="submit" className="btn btn-block">
           submit
         </button>
+
+        <p>
+          {values.isMember ? "Not a member yet?" : "Already a member?"}
+          <button type="button" className="member-btn" onClick={toggleMember}>
+            {values.isMember ? "Register" : "Login"}
+          </button>
+        </p>
       </form>
     </Wrapper>
   );
