@@ -15,12 +15,18 @@ const Register = (props: Props) => {
   const [values, setValues] = useState(initialState);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.value);
+    const name = e.target.name;
+    const value = e.target.value;
+    setValues({ ...values, [name]: value });
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      console.log("Please Fill Out All Fields");
+      return;
+    }
   };
 
   const toggleMember = () => {
