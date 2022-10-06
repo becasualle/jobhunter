@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Logo, FormRow } from "../components";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { loginUser, registerUser } from "../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 type Props = {};
 
@@ -14,7 +16,8 @@ const initialState = {
 
 const Register = (props: Props) => {
   const [values, setValues] = useState(initialState);
-
+  const dispatch = useAppDispatch();
+  const { user, isLoading } = useAppSelector((store) => store.user);
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -24,10 +27,18 @@ const Register = (props: Props) => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { name, email, password, isMember } = values;
+
     if (!email || !password || (!isMember && !name)) {
       toast.error("Please fill out all fields");
       return;
     }
+
+    if (isMember) {
+      dispatch(loginUser({ email, password }));
+      return;
+    }
+
+    dispatch(registerUser({ name, email, password }));
   };
 
   const toggleMember = () => {
