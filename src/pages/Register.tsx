@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import { loginUser, registerUser } from "../features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -18,6 +19,16 @@ const Register = (props: Props) => {
   const [values, setValues] = useState(initialState);
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((store) => store.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+  }, [user, navigate]);
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const name = e.target.name;
     const value = e.target.value;
