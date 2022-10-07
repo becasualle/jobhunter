@@ -1,14 +1,52 @@
-import React from "react";
 import styled from "styled-components";
-import { FaHome } from "react-icons/fa";
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
+import Logo from "./Logo";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const { user } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
   return (
     <Wrapper>
-      <h2>Navbar</h2>
-      <FaHome />
+      <div className="nav-center">
+        <button
+          type="button"
+          className="toggle-btn"
+          onClick={() => {
+            console.log("toggle sidebar");
+          }}
+        >
+          <FaAlignLeft />
+        </button>
+        <div>
+          <Logo />
+          <h3 className="logo-text">dashboard</h3>
+        </div>
+        <div className="btn-container">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => console.log("toggle logout dropdown")}
+          >
+            <FaUserCircle />
+            {user?.name}
+            <FaCaretDown />
+          </button>
+          <div className="dropdown show-dropdown">
+            <button
+              type="button"
+              className="dropdown-btn"
+              onClick={() => console.log("toggle logout user")}
+            >
+              logout
+            </button>
+          </div>
+        </div>
+      </div>
     </Wrapper>
   );
 };
