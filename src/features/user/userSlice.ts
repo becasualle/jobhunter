@@ -12,11 +12,13 @@ export interface User {
 
 export interface userState {
   isLoading: boolean;
+  isSidebarOpen: boolean;
   user: null | User;
 }
 
 const initialState: userState = {
   isLoading: false,
+  isSidebarOpen: false,
   user: getUserFromLocalStorage(),
 };
 
@@ -58,7 +60,11 @@ export const loginUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -89,5 +95,7 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export const { toggleSidebar } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -3,6 +3,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import Logo from "./Logo";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { toggleSidebar } from "../features/user/userSlice";
 
 type Props = {};
 
@@ -17,7 +18,7 @@ const Navbar = (props: Props) => {
           type="button"
           className="toggle-btn"
           onClick={() => {
-            console.log("toggle sidebar");
+            dispatch(toggleSidebar());
           }}
         >
           <FaAlignLeft />
@@ -57,17 +58,21 @@ const Wrapper = styled.nav`
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
-  .logo {
-    display: flex;
-    align-items: center;
-    width: 100px;
-  }
+  background: var(--white);
+
   .nav-center {
     display: flex;
     width: 90vw;
     align-items: center;
     justify-content: space-between;
   }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    width: 100px;
+  }
+
   .toggle-btn {
     background: transparent;
     border-color: transparent;
@@ -77,10 +82,11 @@ const Wrapper = styled.nav`
     display: flex;
     align-items: center;
   }
-  background: var(--white);
+
   .btn-container {
     position: relative;
   }
+
   .btn {
     display: flex;
     align-items: center;
@@ -102,9 +108,11 @@ const Wrapper = styled.nav`
     visibility: hidden;
     border-radius: var(--borderRadius);
   }
+
   .show-dropdown {
     visibility: visible;
   }
+
   .dropdown-btn {
     background: transparent;
     border-color: transparent;
@@ -113,10 +121,12 @@ const Wrapper = styled.nav`
     text-transform: capitalize;
     cursor: pointer;
   }
+
   .logo-text {
     display: none;
     margin: 0;
   }
+
   @media (min-width: 992px) {
     position: sticky;
     top: 0;
@@ -124,9 +134,11 @@ const Wrapper = styled.nav`
     .nav-center {
       width: 90%;
     }
+
     .logo {
       display: none;
     }
+
     .logo-text {
       display: block;
     }
