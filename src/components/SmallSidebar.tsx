@@ -3,6 +3,8 @@ import { FaTimes } from "react-icons/fa";
 import { Logo } from "../components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { toggleSidebar } from "../features/user/userSlice";
+import { NavLink } from "react-router-dom";
+import links from "../utils/links";
 
 type Props = {};
 
@@ -27,7 +29,25 @@ const SmallSidebar = (props: Props) => {
           <header>
             <Logo />
           </header>
-          <div className="nav-links">nav links</div>
+          <div className="nav-links">
+            {links.map((link) => {
+              const { id, icon, path, text } = link;
+
+              return (
+                <NavLink
+                  to={path}
+                  key={id}
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  onClick={() => dispatch(toggleSidebar())}
+                >
+                  <span className="icon">{icon}</span>
+                  {text}
+                </NavLink>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Wrapper>
