@@ -1,12 +1,23 @@
-import React from "react";
 import styled from "styled-components";
+import { FaTimes } from "react-icons/fa";
+import { Logo } from "../components";
 
 type Props = {};
 
 const SmallSidebar = (props: Props) => {
   return (
     <Wrapper>
-      <h2>SmallSidebar</h2>
+      <div className="sidebar-container show-sidebar">
+        <div className="content">
+          <button className="close-btn" onClick={() => console.log("toggle")}>
+            <FaTimes />
+          </button>
+          <header>
+            <Logo />
+          </header>
+          <div className="nav-links">nav links</div>
+        </div>
+      </div>
     </Wrapper>
   );
 };
