@@ -1,15 +1,27 @@
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import { Logo } from "../components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { toggleSidebar } from "../features/user/userSlice";
 
 type Props = {};
 
 const SmallSidebar = (props: Props) => {
+  const dispatch = useAppDispatch();
+  const { isSidebarOpen } = useAppSelector((store) => store.user);
+
   return (
     <Wrapper>
-      <div className="sidebar-container show-sidebar">
+      <div
+        className={
+          isSidebarOpen ? "sidebar-container show-sidebar" : "sidebar-container"
+        }
+      >
         <div className="content">
-          <button className="close-btn" onClick={() => console.log("toggle")}>
+          <button
+            className="close-btn"
+            onClick={() => dispatch(toggleSidebar())}
+          >
             <FaTimes />
           </button>
           <header>
