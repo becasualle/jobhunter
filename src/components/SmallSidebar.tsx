@@ -9,6 +9,9 @@ type Props = {};
 const SmallSidebar = (props: Props) => {
   const dispatch = useAppDispatch();
   const { isSidebarOpen } = useAppSelector((store) => store.user);
+  const toggle = () => {
+    dispatch(toggleSidebar());
+  };
 
   return (
     <Wrapper>
@@ -18,16 +21,13 @@ const SmallSidebar = (props: Props) => {
         }
       >
         <div className="content">
-          <button
-            className="close-btn"
-            onClick={() => dispatch(toggleSidebar())}
-          >
+          <button className="close-btn" onClick={toggle}>
             <FaTimes />
           </button>
           <header>
             <Logo />
           </header>
-          <NavLinks />
+          <NavLinks toggleSidebar={toggle} />
         </div>
       </div>
     </Wrapper>

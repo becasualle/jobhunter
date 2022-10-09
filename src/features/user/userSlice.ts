@@ -22,7 +22,7 @@ export interface userState {
 
 const initialState: userState = {
   isLoading: false,
-  isSidebarOpen: false,
+  isSidebarOpen: true,
   user: getUserFromLocalStorage(),
 };
 

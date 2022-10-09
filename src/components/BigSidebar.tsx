@@ -1,12 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../app/hooks";
+import { Logo, NavLinks } from "../components";
 
 type Props = {};
 
 const BigSidebar = (props: Props) => {
+  const { isSidebarOpen } = useAppSelector((store) => store.user);
   return (
     <Wrapper>
-      <h2>Big sidebar</h2>
+      <div
+        className={
+          isSidebarOpen
+            ? "sidebar-container show-sidebar"
+            : "sidebar-container "
+        }
+      >
+        <div className="content">
+          <header>
+            <Logo />
+          </header>
+          <NavLinks />
+        </div>
+      </div>
     </Wrapper>
   );
 };

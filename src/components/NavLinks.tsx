@@ -4,9 +4,11 @@ import { toggleSidebar } from "../features/user/userSlice";
 import { NavLink } from "react-router-dom";
 import links from "../utils/links";
 
-type Props = {};
+type Props = {
+  toggleSidebar?: () => void;
+};
 
-const NavLinks = (props: Props) => {
+const NavLinks = ({ toggleSidebar }: Props) => {
   const dispatch = useAppDispatch();
   return (
     <div className="nav-links">
@@ -21,7 +23,7 @@ const NavLinks = (props: Props) => {
             className={({ isActive }) =>
               isActive ? "nav-link active" : "nav-link"
             }
-            onClick={() => dispatch(toggleSidebar())}
+            onClick={toggleSidebar}
           >
             <span className="icon">{icon}</span>
             {text}
