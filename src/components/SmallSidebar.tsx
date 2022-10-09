@@ -35,6 +35,7 @@ const SmallSidebar = (props: Props) => {
 
               return (
                 <NavLink
+                  end
                   to={path}
                   key={id}
                   className={({ isActive }) =>
