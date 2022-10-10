@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface ApiUser extends Omit<User, "password"> {
-  lastname: string;
+  lastName: string;
   location: string;
   token: string;
 }
