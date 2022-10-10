@@ -1,6 +1,4 @@
 import React from "react";
-import { useAppDispatch } from "../app/hooks";
-import { toggleSidebar } from "../features/user/userSlice";
 import { NavLink } from "react-router-dom";
 import links from "../utils/links";
 
@@ -9,7 +7,6 @@ type Props = {
 };
 
 const NavLinks = ({ toggleSidebar }: Props) => {
-  const dispatch = useAppDispatch();
   return (
     <div className="nav-links">
       {links.map((link) => {

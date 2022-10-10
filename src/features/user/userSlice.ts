@@ -14,10 +14,20 @@ export interface User {
   password: string;
 }
 
+export interface ApiUser extends Omit<User, "password"> {
+  lastname: string;
+  location: string;
+  token: string;
+}
+
+interface ApiUserData {
+  user: ApiUser;
+}
+
 export interface userState {
   isLoading: boolean;
   isSidebarOpen: boolean;
-  user: null | User;
+  user: null | ApiUser;
 }
 
 const initialState: userState = {
@@ -31,7 +41,7 @@ export const registerUser = createAsyncThunk(
   async (user: User, thunkApi) => {
     try {
       const response = await customFetch.post("/auth/register", user);
-      return response.data;
+      return response.data as ApiUserData;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
 
@@ -49,8 +59,7 @@ export const loginUser = createAsyncThunk(
   async (user: User, thunkApi) => {
     try {
       const response = await customFetch.post("/auth/login", user);
-      console.log(response);
-      return response.data;
+      return response.data as ApiUserData;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
       const {
@@ -93,6 +102,7 @@ export const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, { payload: { user } }) => {
+        console.log({ user });
         state.isLoading = false;
         state.user = user;
         addUserToLocalStorage(user);
