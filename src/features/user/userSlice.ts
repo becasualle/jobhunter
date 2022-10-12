@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customFetch from "../../utils/axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { RootState } from "../../app/store";
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
@@ -19,6 +20,8 @@ export interface ApiUser extends Omit<User, "password"> {
   location: string;
   token: string;
 }
+
+export interface UpdatedUser extends Omit<ApiUser, "token"> {}
 
 interface ApiUserData {
   user: ApiUser;
@@ -70,6 +73,26 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (user: UpdatedUser, thunkApi) => {
+    try {
+      const state = thunkApi.getState() as RootState;
+      const token = state.user.user?.token;
+      const response = await customFetch.patch("auth/updateUser", user, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data as ApiUserData;
+    } catch (error) {
+      console.log(error);
+      const err = error as AxiosError<{ msg: string }>;
+      return thunkApi.rejectWithValue(err.response?.data.msg);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -109,6 +132,20 @@ export const userSlice = createSlice({
         toast.success(`Welcome back  ${user.name}`);
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload as string);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload: { user } }) => {
+        state.isLoading = false;
+        state.user = user;
+
+        addUserToLocalStorage(user);
+        toast.success("User Updated");
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload as string);
       });

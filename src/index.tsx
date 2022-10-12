@@ -5,7 +5,7 @@ import { store } from "./app/store";
 
 import App from "./App";
 import "normalize.css";
-import "./index.css";
+import "./index.scss";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

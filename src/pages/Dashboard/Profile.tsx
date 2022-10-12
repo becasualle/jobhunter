@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FormRow } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
+import { updateUser } from "../../features/user/userSlice";
 
 type Props = {};
 
@@ -24,6 +25,7 @@ const Profile = (props: Props) => {
       toast.error("please fill out all fields");
       return;
     }
+    dispatch(updateUser(userData));
   };
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
