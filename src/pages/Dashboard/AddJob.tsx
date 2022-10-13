@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { FormRow } from "../../components";
+import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 type Props = {};
 
@@ -28,7 +28,9 @@ const AddJob = (props: Props) => {
     }
   };
 
-  const handleInpit: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleInput: React.ChangeEventHandler<
+    HTMLInputElement | HTMLSelectElement
+  > = (e) => {
     const name = e.target.name;
     const value = e.target.value;
   };
@@ -41,20 +43,33 @@ const AddJob = (props: Props) => {
             type="text"
             name="position"
             value={position}
-            handleChange={handleInpit}
+            handleChange={handleInput}
           />
           <FormRow
             type="text"
             name="company"
             value={company}
-            handleChange={handleInpit}
+            handleChange={handleInput}
           />
           <FormRow
             type="text"
             labelText="Job Location"
             name="jobLocation"
             value={jobLocation}
-            handleChange={handleInpit}
+            handleChange={handleInput}
+          />
+          <FormRowSelect
+            list={statusOptions}
+            name="status"
+            value={status}
+            handleChange={handleInput}
+          />
+          <FormRowSelect
+            list={jobTypeOptions}
+            name="jobType"
+            labelText="job type"
+            value={jobType}
+            handleChange={handleInput}
           />
           <div className="btn-container">
             <button
