@@ -12,7 +12,7 @@ interface JobState {
   jobType: "full-time" | "part-time" | "remote" | "internship";
   statusOptions: ["interview", "declined", "pending"];
   status: "interview" | "declined" | "pending";
-  editJob: string;
+  editJobId: string;
 }
 
 const initialState: JobState = {
@@ -25,7 +25,7 @@ const initialState: JobState = {
   jobType: "full-time",
   statusOptions: ["interview", "declined", "pending"],
   status: "pending",
-  editJob: "",
+  editJobId: "",
 };
 
 export const jobSlice = createSlice({
