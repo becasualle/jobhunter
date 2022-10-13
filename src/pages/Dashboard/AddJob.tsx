@@ -2,6 +2,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FormRow, FormRowSelect } from "../../components";
+import { handleChange, FieldName } from "../../features/job/jobSlice";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 type Props = {};
 
@@ -31,9 +32,11 @@ const AddJob = (props: Props) => {
   const handleInput: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = (e) => {
-    const name = e.target.name;
+    const name = e.target.name as FieldName;
     const value = e.target.value;
+    dispatch(handleChange({ name, value }));
   };
+
   return (
     <Wrapper>
       <form className="form">
