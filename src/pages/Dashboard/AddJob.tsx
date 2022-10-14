@@ -6,6 +6,7 @@ import {
   handleChange,
   FieldName,
   clearValues,
+  createJob,
 } from "../../features/job/jobSlice";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 type Props = {};
@@ -31,6 +32,7 @@ const AddJob = (props: Props) => {
       toast.error("Please Fill Out All Fields");
       return;
     }
+    dispatch(createJob({ company, jobLocation, jobType, position, status }));
   };
 
   const handleInput: React.ChangeEventHandler<
