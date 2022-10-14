@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { RootState } from "../../app/store";
 import customFetch from "../../utils/axios";
+import { getUserFromLocalStorage } from "../user/localStorage";
 import { logoutUser } from "../user/userSlice";
 
 export interface JobFields {
@@ -80,7 +81,10 @@ export const jobSlice = createSlice({
       state = { ...state, [name]: value };
       return state;
     },
-    clearValues: () => ({ ...initialState }),
+    clearValues: () => ({
+      ...initialState,
+      jobLocation: getUserFromLocalStorage()?.location || "",
+    }),
   },
   extraReducers(builder) {
     builder

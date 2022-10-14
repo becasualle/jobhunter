@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, MouseEventHandler, ChangeEventHandler } from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FormRow, FormRowSelect } from "../../components";
@@ -14,7 +14,6 @@ type Props = {};
 const AddJob = (props: Props) => {
   const {
     company,
-    editJobId,
     isEditing,
     isLoading,
     jobLocation,
@@ -24,9 +23,23 @@ const AddJob = (props: Props) => {
     status,
     statusOptions,
   } = useAppSelector((store) => store.job);
+
+  const { user } = useAppSelector((store) => store.user);
+
   const dispatch = useAppDispatch();
 
-  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  useEffect(() => {
+    if (!isEditing) {
+      dispatch(
+        handleChange({
+          name: "jobLocation",
+          value: user?.location ? user.location : "",
+        })
+      );
+    }
+  }, []);
+
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
       toast.error("Please Fill Out All Fields");
@@ -35,7 +48,7 @@ const AddJob = (props: Props) => {
     dispatch(createJob({ company, jobLocation, jobType, position, status }));
   };
 
-  const handleInput: React.ChangeEventHandler<
+  const handleInput: ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = (e) => {
     const name = e.target.name as FieldName;
