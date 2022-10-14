@@ -91,7 +91,7 @@ export const jobSlice = createSlice({
       .addCase(createJob.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createJob.fulfilled, (state, action) => {
+      .addCase(createJob.fulfilled, (state) => {
         state.isLoading = false;
         toast.success("Job Created");
       })

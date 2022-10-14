@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import customFetch from "../../utils/axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -100,10 +100,14 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logoutUser: (state) => {
+    logoutUser: (state, action: PayloadAction<string | undefined>) => {
       state.user = null;
-      removeUserFromLocalStorage();
       state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      const { payload } = action;
+      if (action) {
+        toast.success(payload);
+      }
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;

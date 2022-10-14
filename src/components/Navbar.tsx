@@ -13,7 +13,7 @@ const Navbar = (props: Props) => {
   const [showLogout, setShowLogout] = useState(false);
 
   const logout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser("Logging out..."));
     setShowLogout(false);
   };
 
