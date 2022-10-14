@@ -10,6 +10,8 @@ export interface JobFields {
   status: "interview" | "declined" | "pending";
 }
 
+export type FieldName = keyof JobFields;
+
 export interface JobState extends JobFields {
   isLoading: boolean;
   isEditing: boolean;
@@ -17,8 +19,6 @@ export interface JobState extends JobFields {
   jobTypeOptions: ["full-time", "part-time", "remote", "internship"];
   statusOptions: ["interview", "declined", "pending"];
 }
-
-export type FieldName = keyof JobFields;
 
 const initialState: JobState = {
   isLoading: false,
@@ -42,8 +42,8 @@ export const jobSlice = createSlice({
       action: PayloadAction<{ name: FieldName; value: string }>
     ) => {
       const { name, value } = action.payload;
-      // @ts-ignore
-      state[name] = value;
+      state = { ...state, [name]: value };
+      return state;
     },
   },
   extraReducers(builder) {},
