@@ -2,7 +2,11 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FormRow, FormRowSelect } from "../../components";
-import { handleChange, FieldName } from "../../features/job/jobSlice";
+import {
+  handleChange,
+  FieldName,
+  clearValues,
+} from "../../features/job/jobSlice";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 type Props = {};
 
@@ -79,7 +83,7 @@ const AddJob = (props: Props) => {
               type="button"
               className="btn btn-block clear-btn"
               onClick={() => {
-                console.log("clear");
+                dispatch(clearValues());
               }}
             >
               clear

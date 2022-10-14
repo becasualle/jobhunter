@@ -45,10 +45,11 @@ export const jobSlice = createSlice({
       state = { ...state, [name]: value };
       return state;
     },
+    clearValues: () => ({ ...initialState }),
   },
   extraReducers(builder) {},
 });
 
-export const { handleChange } = jobSlice.actions;
+export const { handleChange, clearValues } = jobSlice.actions;
 
 export default jobSlice.reducer;
