@@ -11,12 +11,16 @@ export interface JobsFiltersState {
 }
 export interface JobsInitialState extends JobsFiltersState {
   isLoading: boolean;
-  jobs: [];
+  jobs: Job[];
   totalJobs: number;
   numOfPages: number;
   page: number;
   stats: {};
   monthlyApplications: [];
+}
+
+export interface Job {
+  _id: number;
 }
 
 const initialFilterState: JobsFiltersState = {
