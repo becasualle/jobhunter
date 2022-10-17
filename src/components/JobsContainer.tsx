@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Job, Loading } from "../components";
+import { getAllJobs } from "../features/allJobs/allJobsSlice";
 
 type Props = {};
 
 const JobsContainer = (props: Props) => {
   const { jobs, isLoading } = useAppSelector((store) => store.allJobs);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllJobs());
+  }, []);
+
   if (isLoading) {
     return <Loading center />;
   }
