@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
 import { APIJob } from "../features/allJobs/allJobsSlice";
 import { Link } from "react-router-dom";
+import { JobInfo } from "../components";
+import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from "react-icons/fa";
 
 interface Props extends APIJob {}
 
@@ -18,6 +20,7 @@ const Job = ({
   updatedAt,
 }: Props) => {
   const dispatch = useAppDispatch();
+  const date = createdAt;
   return (
     <Wrapper>
       <header>
@@ -29,7 +32,9 @@ const Job = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <h4>more content</h4>
+          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
+          <JobInfo icon={<FaCalendarAlt />} text={date} />
+          <JobInfo icon={<FaBriefcase />} text={jobType} />
           <div className={`status ${status}`}>{status}</div>
         </div>
         <footer>

@@ -1,4 +1,19 @@
+import React, { cloneElement } from "react";
 import styled from "styled-components";
+
+type Props = {
+  icon: JSX.Element;
+  text: string;
+};
+
+const JobInfo = ({ icon, text }: Props) => {
+  return (
+    <Wrapper>
+      <span className="icon">{cloneElement(icon)}</span>
+      <span className="text">{text}</span>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   margin-top: 0.5rem;
@@ -19,4 +34,5 @@ const Wrapper = styled.div`
     letter-spacing: var(--letterSpacing);
   }
 `;
-export default Wrapper;
+
+export default JobInfo;
