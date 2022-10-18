@@ -5,6 +5,7 @@ import { RootState } from "../../app/store";
 import customFetch from "../../utils/axios";
 import { getUserFromLocalStorage } from "../user/localStorage";
 import { logoutUser } from "../user/userSlice";
+import { hideLoading, showLoading, getAllJobs } from "../allJobs/allJobsSlice";
 
 export interface JobFields {
   position: string;
