@@ -5,6 +5,7 @@ import { APIJob } from "../features/allJobs/allJobsSlice";
 import { Link } from "react-router-dom";
 import { JobInfo } from "../components";
 import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from "react-icons/fa";
+import dayjs from "dayjs";
 
 interface Props extends APIJob {}
 
@@ -20,7 +21,8 @@ const Job = ({
   updatedAt,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const date = createdAt;
+  const date = dayjs(createdAt).format("MMM D, YYYY");
+  console.log(date);
   return (
     <Wrapper>
       <header>
