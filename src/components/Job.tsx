@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { JobInfo } from "../components";
 import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from "react-icons/fa";
 import dayjs from "dayjs";
+import { deleteJob } from "../features/job/jobSlice";
 
 interface Props extends APIJob {}
 
@@ -22,7 +23,7 @@ const Job = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const date = dayjs(createdAt).format("MMM D, YYYY");
-  console.log(date);
+
   return (
     <Wrapper>
       <header>
@@ -54,7 +55,7 @@ const Job = ({
               type="button"
               className="btn delete-btn"
               onClick={() => {
-                console.log("Delete job");
+                dispatch(deleteJob(_id));
               }}
             >
               Delete

@@ -70,6 +70,26 @@ export const createJob = createAsyncThunk(
   }
 );
 
+export const deleteJob = createAsyncThunk(
+  "job/deleteJob",
+  async (jobId: string, thunkApi) => {
+    thunkApi.dispatch(showLoading());
+    try {
+      const state = thunkApi.getState() as RootState;
+      const token = state.user.user?.token;
+      const response = await customFetch.delete(`/jobs/${jobId}`, {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      thunkApi.dispatch(getAllJobs());
+      return response.data as { msg: string };
+    } catch (error) {
+      thunkApi.dispatch(hideLoading());
+      const err = error as AxiosError<{ msg: string }>;
+      return thunkApi.rejectWithValue(err.response?.data.msg);
+    }
+  }
+);
+
 export const jobSlice = createSlice({
   name: "job",
   initialState,
@@ -98,6 +118,9 @@ export const jobSlice = createSlice({
       })
       .addCase(createJob.rejected, (state, { payload }) => {
         state.isLoading = false;
+        toast.error(payload as string);
+      })
+      .addCase(deleteJob.rejected, (state, { payload }) => {
         toast.error(payload as string);
       });
   },
