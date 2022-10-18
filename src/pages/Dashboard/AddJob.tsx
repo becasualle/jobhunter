@@ -7,6 +7,7 @@ import {
   FieldName,
   clearValues,
   createJob,
+  editJob,
 } from "../../features/job/jobSlice";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 type Props = {};
@@ -22,6 +23,7 @@ const AddJob = (props: Props) => {
     position,
     status,
     statusOptions,
+    editJobId,
   } = useAppSelector((store) => store.job);
 
   const { user } = useAppSelector((store) => store.user);
@@ -37,12 +39,30 @@ const AddJob = (props: Props) => {
         })
       );
     }
-  }, []);
+    return () => {
+      dispatch(clearValues());
+    };
+  }, [dispatch, isEditing, user?.location]);
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
       toast.error("Please Fill Out All Fields");
+      return;
+    }
+    if (isEditing) {
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: {
+            position,
+            company,
+            jobLocation,
+            jobType,
+            status,
+          },
+        })
+      );
       return;
     }
     dispatch(createJob({ company, jobLocation, jobType, position, status }));

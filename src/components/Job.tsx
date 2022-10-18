@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { JobInfo } from "../components";
 import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from "react-icons/fa";
 import dayjs from "dayjs";
-import { deleteJob } from "../features/job/jobSlice";
+import { deleteJob, setEditJob } from "../features/job/jobSlice";
 
 interface Props extends APIJob {}
 
@@ -14,12 +14,10 @@ const Job = ({
   _id,
   company,
   createdAt,
-  createdBy,
   jobLocation,
   jobType,
   position,
   status,
-  updatedAt,
 }: Props) => {
   const dispatch = useAppDispatch();
   const date = dayjs(createdAt).format("MMM D, YYYY");
@@ -46,7 +44,16 @@ const Job = ({
               to="/add-job"
               className="btn edit-btn"
               onClick={() => {
-                console.log("Edit job");
+                dispatch(
+                  setEditJob({
+                    editJobId: _id,
+                    company,
+                    jobLocation,
+                    jobType,
+                    position,
+                    status,
+                  })
+                );
               }}
             >
               Edit

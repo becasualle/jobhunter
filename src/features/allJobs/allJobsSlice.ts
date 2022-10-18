@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { RootState } from "../../app/store";
+import { JobType, StatusType } from "../job/jobSlice";
 import customFetch from "../../utils/axios";
 
 export interface JobsFiltersState {
@@ -25,8 +26,8 @@ export interface APIJob {
   _id: string;
   company: string;
   position: string;
-  status: string;
-  jobType: string;
+  status: StatusType;
+  jobType: JobType;
   jobLocation: string;
   createdBy: string;
   createdAt: string;
