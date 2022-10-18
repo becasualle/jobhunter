@@ -13,7 +13,7 @@ export interface JobsFiltersState {
 }
 export interface JobsInitialState extends JobsFiltersState {
   isLoading: boolean;
-  jobs: Job[];
+  jobs: APIJob[];
   totalJobs: number;
   numOfPages: number;
   page: number;
@@ -21,7 +21,7 @@ export interface JobsInitialState extends JobsFiltersState {
   monthlyApplications: [];
 }
 
-export interface Job {
+export interface APIJob {
   _id: string;
   company: string;
   position: string;
@@ -37,7 +37,7 @@ export interface Job {
 export interface ApiJobsData {
   totalJobs: number;
   numOfPages: number;
-  jobs: Job[];
+  jobs: APIJob[];
 }
 
 const initialFilterState: JobsFiltersState = {
