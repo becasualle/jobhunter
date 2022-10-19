@@ -12,7 +12,7 @@ const JobsContainer = (props: Props) => {
 
   useEffect(() => {
     dispatch(getAllJobs());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loading center />;
