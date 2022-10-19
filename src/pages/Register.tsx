@@ -87,6 +87,19 @@ const Register = (props: Props) => {
           {isLoading ? "loading..." : "submit"}
         </button>
 
+        <button
+          type="button"
+          className="btn btn-block btn-hipster"
+          disabled={isLoading}
+          onClick={() => {
+            dispatch(
+              loginUser({ email: "testUser@test.com", password: "secret" })
+            );
+          }}
+        >
+          {isLoading ? "loading..." : "demo"}
+        </button>
+
         <p>
           {values.isMember ? "Not a member yet?" : "Already a member?"}
           <button type="button" className="member-btn" onClick={toggleMember}>
