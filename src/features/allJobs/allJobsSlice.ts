@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { RootState } from "../../app/store";
 import { JobType, StatusType } from "../job/jobSlice";
 import customFetch from "../../utils/axios";
 
@@ -54,7 +53,7 @@ export interface JobsInitialState extends JobsFiltersState {
   totalJobs: number;
   numOfPages: number;
   page: number;
-  stats: Stats | {};
+  stats: Stats;
   monthlyApplications: MonthlyApplication[] | [];
 }
 
@@ -72,7 +71,7 @@ const initialState: JobsInitialState = {
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
-  stats: {},
+  stats: { declined: 0, interview: 0, pending: 0 },
   monthlyApplications: [],
   ...initialFilterState,
 };

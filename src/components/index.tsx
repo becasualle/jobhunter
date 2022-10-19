@@ -12,6 +12,8 @@ import Loading from "./Loading";
 import JobInfo from "./JobInfo";
 import ChartsContainer from "./ChartsContainer";
 import StatsContainer from "./StatsContainer";
+import StatItem from "./StatItem";
+
 export {
   Logo,
   FormRow,
@@ -27,4 +29,5 @@ export {
   JobInfo,
   ChartsContainer,
   StatsContainer,
+  StatItem,
 };
