@@ -11,13 +11,7 @@ export const createJobThunk: AsyncThunkPayloadCreator<
   JobFields
 > = async (job, thunkApi) => {
   try {
-    const state = thunkApi.getState() as RootState;
-    const token = state.user.user?.token;
-    const response = await customFetch.post("/jobs", job, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await customFetch.post("/jobs", job);
     thunkApi.dispatch(clearValues());
     return response.data;
   } catch (error) {
@@ -36,11 +30,7 @@ export const deleteJobThunk: AsyncThunkPayloadCreator<
 > = async (jobId, thunkApi) => {
   thunkApi.dispatch(showLoading());
   try {
-    const state = thunkApi.getState() as RootState;
-    const token = state.user.user?.token;
-    const response = await customFetch.delete(`/jobs/${jobId}`, {
-      headers: { authorization: `Bearer ${token}` },
-    });
+    const response = await customFetch.delete(`/jobs/${jobId}`);
     thunkApi.dispatch(getAllJobs());
     return response.data;
   } catch (error) {
@@ -55,13 +45,8 @@ export const editJobThunk: AsyncThunkPayloadCreator<
   { jobId: string; job: JobFields }
 > = async ({ jobId, job }, thunkApi) => {
   try {
-    const state = thunkApi.getState() as RootState;
-    const token = state.user.user?.token;
-    const response = await customFetch.patch(`/jobs/${jobId}`, job, {
-      headers: { authorization: `Bearer ${token}` },
-    });
+    const response = await customFetch.patch(`/jobs/${jobId}`, job);
     thunkApi.dispatch(clearValues());
-    console.log({ response });
     return response.data;
   } catch (error) {
     const err = error as AxiosError<{ msg: string }>;

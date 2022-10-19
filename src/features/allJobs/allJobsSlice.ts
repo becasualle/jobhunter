@@ -66,13 +66,7 @@ export const getAllJobs = createAsyncThunk(
     let url = "/jobs";
 
     try {
-      const state = thunkApi.getState() as RootState;
-      const token = state.user.user?.token;
-      const response = await customFetch.get(url, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await customFetch.get(url);
       return response.data as ApiJobsData;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;

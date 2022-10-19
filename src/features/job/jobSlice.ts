@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { getUserFromLocalStorage } from "../user/localStorage";
+import { getUserFromLocalStorage } from "../../utils/localStorage";
 import { createJobThunk, deleteJobThunk, editJobThunk } from "./jobThunk";
 
 export interface JobFields {

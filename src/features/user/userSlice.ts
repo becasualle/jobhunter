@@ -7,7 +7,7 @@ import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
-} from "./localStorage";
+} from "../../utils/localStorage";
 
 export interface User {
   name?: string;
@@ -77,13 +77,7 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user: UpdatedUser, thunkApi) => {
     try {
-      const state = thunkApi.getState() as RootState;
-      const token = state.user.user?.token;
-      const response = await customFetch.patch("auth/updateUser", user, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await customFetch.patch("auth/updateUser", user);
       return response.data as ApiUserData;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
@@ -132,7 +126,6 @@ export const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, { payload: { user } }) => {
-        console.log({ user });
         state.isLoading = false;
         state.user = user;
         addUserToLocalStorage(user);

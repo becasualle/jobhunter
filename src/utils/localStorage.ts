@@ -1,4 +1,4 @@
-import { ApiUser } from "./userSlice";
+import { ApiUser } from "../features/user/userSlice";
 
 export const addUserToLocalStorage = (user: ApiUser) => {
   localStorage.setItem("user", JSON.stringify(user));
