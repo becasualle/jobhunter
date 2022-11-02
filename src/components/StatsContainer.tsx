@@ -1,15 +1,21 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from "react-icons/fa";
 import { useAppSelector } from "../app/hooks";
 import { StatItem } from "../components";
 import styled from "styled-components";
 
-type Props = {};
+export interface DefaultStats {
+  title: string;
+  count: number;
+  icon: ReactElement;
+  color: string;
+  bcg: string;
+}
 
-const StatsContainer = (props: Props) => {
+const StatsContainer = () => {
   const { stats } = useAppSelector((store) => store.allJobs);
 
-  const defaultStats = [
+  const defaultStats: DefaultStats[] = [
     {
       title: "pending applications",
       count: stats.pending,
