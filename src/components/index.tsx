@@ -13,6 +13,8 @@ import JobInfo from "./JobInfo";
 import ChartsContainer from "./ChartsContainer";
 import StatsContainer from "./StatsContainer";
 import StatItem from "./StatItem";
+import BarChart from "./BarChart";
+import AreaChart from "./AreaChart";
 
 export {
   Logo,
@@ -30,4 +32,6 @@ export {
   ChartsContainer,
   StatsContainer,
   StatItem,
+  AreaChart,
+  BarChart,
 };
