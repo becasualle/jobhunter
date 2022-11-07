@@ -13,8 +13,8 @@ import JobInfo from "./JobInfo";
 import ChartsContainer from "./ChartsContainer";
 import StatsContainer from "./StatsContainer";
 import StatItem from "./StatItem";
-import BarChart from "./BarChart";
-import AreaChart from "./AreaChart";
+import BarChart from "./BarChartComponent";
+import AreaChart from "./AreaChartComponent";
 
 export {
   Logo,
