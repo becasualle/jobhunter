@@ -6,8 +6,8 @@ type Props = {};
 const AllJobs = (props: Props) => {
   return (
     <>
-      <JobsContainer />
       <SearchContainer />
+      <JobsContainer />
     </>
   );
 };

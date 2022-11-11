@@ -28,12 +28,15 @@ export interface JobAPIResponse extends JobFields {
 
 export type FieldName = keyof JobFields;
 
+export const jobTypeOptions = ["full-time", "part-time", "remote", "internship"];
+export const statusOptions = ["interview", "declined", "pending"];
+
 export interface JobState extends JobFields {
   isLoading: boolean;
   isEditing: boolean;
   editJobId: string;
-  jobTypeOptions: ["full-time", "part-time", "remote", "internship"];
-  statusOptions: ["interview", "declined", "pending"];
+  jobTypeOptions: typeof jobTypeOptions;
+  statusOptions: typeof statusOptions;
 }
 
 const initialState: JobState = {
@@ -42,9 +45,9 @@ const initialState: JobState = {
   position: "",
   company: "",
   jobLocation: "",
-  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
+  jobTypeOptions,
   jobType: "full-time",
-  statusOptions: ["interview", "declined", "pending"],
+  statusOptions,
   status: "pending",
   editJobId: "",
 };

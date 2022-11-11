@@ -2,19 +2,22 @@ import { FormRow, FormRowSelect } from ".";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import styled from "styled-components";
 
-type Props = {};
-
-const SearchContainer = (props: Props) => {
+const SearchContainer = () => {
   const { isLoading, search, searchStatus, searchType, sort, sortOptions } =
     useAppSelector((store) => store.allJobs);
   const { jobTypeOptions, statusOptions } = useAppSelector(
     (store) => store.job
   );
+  const jobTypeFilters = ["all", ...jobTypeOptions];
+  const jobStatusFilters = ["all", ...statusOptions];
+
   const dispatch = useAppDispatch();
 
   const handleSearch: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
-  > = (e) => {};
+  > = (e) => {
+    console.log(e);
+  };
 
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ const SearchContainer = (props: Props) => {
           {/* Search By Status */}
           <FormRowSelect
             handleChange={handleSearch}
-            list={["all", ...statusOptions]}
+            list={jobStatusFilters}
             name="searchStatus"
             value={searchStatus}
             labelText="status"
@@ -43,7 +46,7 @@ const SearchContainer = (props: Props) => {
           {/* Search By Type */}
           <FormRowSelect
             handleChange={handleSearch}
-            list={["all", ...jobTypeOptions]}
+            list={jobTypeFilters}
             name="searchType"
             value={searchType}
             labelText="type"
