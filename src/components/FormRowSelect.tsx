@@ -5,7 +5,7 @@ type Props = {
   value: string;
   labelText?: string;
   list: string[];
-  handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  handleChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
 const FormRowSelect = ({
