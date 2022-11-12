@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { JobType, StatusType } from "../job/jobSlice";
@@ -39,14 +39,6 @@ export interface ApiStatsInfo {
   monthlyApplications: MonthlyApplication[] | [];
 }
 
-export interface JobsFiltersState {
-  search: string;
-  searchStatus: string;
-  searchType: string;
-  sort: string;
-  sortOptions: string[];
-}
-
 export interface JobsInitialState extends JobsFiltersState {
   isLoading: boolean;
   jobs: APIJob[];
@@ -57,13 +49,25 @@ export interface JobsInitialState extends JobsFiltersState {
   monthlyApplications: MonthlyApplication[] | [];
 }
 
-const initialFilterState: JobsFiltersState = {
+// TODO: refactor slices using typeof instead of interfaces;
+
+// export interface JobsFiltersState {
+//   search: string;
+//   searchStatus: string;
+//   searchType: string;
+//   sort: string;
+//   sortOptions: string[];
+// }
+
+const initialFilterState = {
   search: "",
   searchStatus: "all",
   searchType: "all",
   sort: "latest",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
 };
+
+export type JobsFiltersState = typeof initialFilterState;
 
 const initialState: JobsInitialState = {
   isLoading: false,
@@ -75,6 +79,8 @@ const initialState: JobsInitialState = {
   monthlyApplications: [],
   ...initialFilterState,
 };
+
+export type FieldName = keyof JobsFiltersState;
 
 export const getAllJobs = createAsyncThunk(
   "allJobs/getJobs",
@@ -107,6 +113,16 @@ const allJobsSlice = createSlice({
   name: "allJobs",
   initialState,
   reducers: {
+    handleChange: (
+      state,
+      action: PayloadAction<{ name: FieldName; value: string }>
+    ) => {
+      const {
+        payload: { name, value },
+      } = action;
+      return { ...state, [name]: value };
+    },
+    clearFilters: (state) => ({ ...state, ...initialFilterState }),
     showLoading: (state) => {
       state.isLoading = true;
     },
@@ -142,6 +158,7 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { showLoading, hideLoading } = allJobsSlice.actions;
+export const { showLoading, hideLoading, handleChange, clearFilters } =
+  allJobsSlice.actions;
 
 export default allJobsSlice.reducer;

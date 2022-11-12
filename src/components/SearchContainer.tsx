@@ -1,5 +1,10 @@
 import { FormRow, FormRowSelect } from ".";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  handleChange,
+  FieldName,
+  clearFilters,
+} from "../features/allJobs/allJobsSlice";
 import styled from "styled-components";
 
 const SearchContainer = () => {
@@ -16,11 +21,15 @@ const SearchContainer = () => {
   const handleSearch: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = (e) => {
-    console.log(e);
+    if (isLoading) return;
+    const name = e.target.name as FieldName;
+    const value = e.target.value;
+    dispatch(handleChange({ name, value }));
   };
 
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
+    dispatch(clearFilters());
   };
 
   return (
