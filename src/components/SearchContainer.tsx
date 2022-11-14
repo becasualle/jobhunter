@@ -6,24 +6,35 @@ import {
   clearFilters,
 } from "../features/allJobs/allJobsSlice";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const SearchContainer = () => {
+  // for lazy loading
+  const [searchTerm, setSearchTerm] = useState({ name: "search", value: "" });
+
   const { isLoading, search, searchStatus, searchType, sort, sortOptions } =
     useAppSelector((store) => store.allJobs);
   const { jobTypeOptions, statusOptions } = useAppSelector(
     (store) => store.job
   );
+
   const jobTypeFilters = ["all", ...jobTypeOptions];
   const jobStatusFilters = ["all", ...statusOptions];
-
+  console.log("rendered");
   const dispatch = useAppDispatch();
 
   const handleSearch: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = (e) => {
-    if (isLoading) return;
+    // if (isLoading) return;
     const name = e.target.name as FieldName;
     const value = e.target.value;
+
+    if (name === "search") {
+      setSearchTerm({ name, value });
+      return;
+    }
+
     dispatch(handleChange({ name, value }));
   };
 
@@ -31,6 +42,13 @@ const SearchContainer = () => {
     e.preventDefault();
     dispatch(clearFilters());
   };
+  // lazy loading search string
+  useEffect(() => {
+    const debounceId = setTimeout(() => {
+      dispatch(handleChange({ name: "search", value: searchTerm.value }));
+    }, 500);
+    return () => clearTimeout(debounceId);
+  }, [searchTerm, dispatch]);
 
   return (
     <Wrapper>
@@ -41,7 +59,7 @@ const SearchContainer = () => {
           <FormRow
             type="text"
             name="search"
-            value={search}
+            value={searchTerm.value}
             handleChange={handleSearch}
           />
           {/* Search By Status */}

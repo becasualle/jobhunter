@@ -128,7 +128,9 @@ const allJobsSlice = createSlice({
       const {
         payload: { name, value },
       } = action;
-      return { ...state, [name]: value };
+      // set page to 1 in order to avoid bugs when we are on page 8 and set status to declined and there is no results on page 8.
+      // instead of it we are set by default to 1 page where will be results if they are existing
+      return { ...state, page: 1, [name]: value };
     },
     changePage: (state, { payload }: PayloadAction<number>) => {
       state.page = payload;
