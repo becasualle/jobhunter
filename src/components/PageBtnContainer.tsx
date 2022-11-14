@@ -1,17 +1,27 @@
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import styled from "styled-components";
+import { changePage } from "../features/allJobs/allJobsSlice";
 
 const PageBtnContainer = () => {
   const { page, numOfPages } = useAppSelector((store) => store.allJobs);
   const dispatch = useAppDispatch();
   const pages = Array.from({ length: numOfPages }, (_, index) => index + 1);
 
+  let newPage;
   const nextPage = () => {
-    console.log("nextPage");
+    newPage = page + 1;
+    if (newPage > numOfPages) {
+      newPage = 1;
+    }
+    dispatch(changePage(newPage));
   };
   const prevPage = () => {
-    console.log("prevPage");
+    newPage = page - 1;
+    if (newPage < 1) {
+      newPage = numOfPages;
+    }
+    dispatch(changePage(newPage));
   };
 
   return (
@@ -27,7 +37,7 @@ const PageBtnContainer = () => {
               type="button"
               key={pageNumber}
               className={pageNumber === page ? "pageBtn active" : "pageBtn"}
-              onClick={() => console.log("change page")}
+              onClick={() => dispatch(changePage(pageNumber))}
             >
               {pageNumber}
             </button>
