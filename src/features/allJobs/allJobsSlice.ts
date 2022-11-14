@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { JobType, StatusType } from "../job/jobSlice";
+import { RootState } from "../../app/store";
 import customFetch from "../../utils/axios";
 
 export interface APIJob {
@@ -85,7 +86,14 @@ export type FieldName = keyof JobsFiltersState;
 export const getAllJobs = createAsyncThunk(
   "allJobs/getJobs",
   async (_, thunkApi) => {
-    let url = "/jobs";
+    const state = thunkApi.getState() as RootState;
+    const { page, search, searchStatus, searchType, sort } = state.allJobs;
+    // pagination and filters in query string params
+    let url = `/jobs?&status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+
+    if (search) {
+      url = url + `&search=${search}`;
+    }
 
     try {
       const response = await customFetch.get(url);

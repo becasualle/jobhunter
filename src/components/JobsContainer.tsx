@@ -8,14 +8,23 @@ import PageBtnContainer from "./PageBtnContainer";
 type Props = {};
 
 const JobsContainer = (props: Props) => {
-  const { jobs, isLoading, page, numOfPages, totalJobs } = useAppSelector(
-    (store) => store.allJobs
-  );
+  const {
+    jobs,
+    isLoading,
+    page,
+    numOfPages,
+    totalJobs,
+    search,
+    searchStatus,
+    searchType,
+    sort,
+  } = useAppSelector((store) => store.allJobs);
   const dispatch = useAppDispatch();
 
+  // each and every time filters, search or pagination data changes, make http get-request
   useEffect(() => {
     dispatch(getAllJobs());
-  }, [dispatch]);
+  }, [page, search, searchStatus, searchType, sort, dispatch]);
 
   if (isLoading) {
     return <Loading center />;
