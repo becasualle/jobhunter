@@ -3,11 +3,14 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Job, Loading } from "../components";
 import { getAllJobs } from "../features/allJobs/allJobsSlice";
+import PageBtnContainer from "./PageBtnContainer";
 
 type Props = {};
 
 const JobsContainer = (props: Props) => {
-  const { jobs, isLoading } = useAppSelector((store) => store.allJobs);
+  const { jobs, isLoading, page, numOfPages, totalJobs } = useAppSelector(
+    (store) => store.allJobs
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,12 +31,15 @@ const JobsContainer = (props: Props) => {
 
   return (
     <Wrapper>
-      <h5>jobs info</h5>
+      <h5>
+        {totalJobs} job{jobs.length > 1 && "s"} found
+      </h5>
       <div className="jobs">
         {jobs.map((job) => {
           return <Job key={job._id} {...job} />;
         })}
       </div>
+      {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
   );
 };
