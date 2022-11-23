@@ -1,7 +1,6 @@
 import customFetch from "../../utils/axios";
-import { RootState } from "../../app/store";
 import { JobFields, JobAPIResponse, clearValues } from "./jobSlice";
-import { logoutUser } from "../user/userSlice";
+import { clearStore } from "../user/userSlice";
 import { showLoading, hideLoading, getAllJobs } from "../allJobs/allJobsSlice";
 import { AxiosError } from "axios";
 import { AsyncThunkPayloadCreator } from "@reduxjs/toolkit";
@@ -17,7 +16,7 @@ export const createJobThunk: AsyncThunkPayloadCreator<
   } catch (error) {
     const err = error as AxiosError<{ msg: string }>;
     if (err.response?.status === 401) {
-      thunkApi.dispatch(logoutUser());
+      thunkApi.dispatch(clearStore(err.response.data.msg));
       return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
     }
     return thunkApi.rejectWithValue(err.response?.data.msg);
@@ -36,6 +35,10 @@ export const deleteJobThunk: AsyncThunkPayloadCreator<
   } catch (error) {
     thunkApi.dispatch(hideLoading());
     const err = error as AxiosError<{ msg: string }>;
+    if (err.response?.status === 401) {
+      thunkApi.dispatch(clearStore(err.response.data.msg));
+      return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
+    }
     return thunkApi.rejectWithValue(err.response?.data.msg);
   }
 };
@@ -50,6 +53,10 @@ export const editJobThunk: AsyncThunkPayloadCreator<
     return response.data;
   } catch (error) {
     const err = error as AxiosError<{ msg: string }>;
+    if (err.response?.status === 401) {
+      thunkApi.dispatch(clearStore(err.response.data.msg));
+      return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
+    }
     return thunkApi.rejectWithValue(err.response?.data.msg);
   }
 };

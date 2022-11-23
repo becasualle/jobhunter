@@ -83,8 +83,8 @@ export const updateUser = createAsyncThunk(
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
       if (err.response?.status === 401) {
-        thunkApi.dispatch(logoutUser());
-        return thunkApi.rejectWithValue("Unathorized! Logging Out...");
+        thunkApi.dispatch(clearStore(err.response.data.msg));
+        return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
       }
       return thunkApi.rejectWithValue(err.response?.data.msg);
     }

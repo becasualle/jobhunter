@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { JobType, StatusType } from "../job/jobSlice";
 import { RootState } from "../../app/store";
 import customFetch from "../../utils/axios";
+import { clearStore } from "../user/userSlice";
 
 export interface APIJob {
   _id: string;
@@ -102,6 +103,10 @@ export const getAllJobs = createAsyncThunk(
       return response.data as ApiJobsData;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
+      if (err.response?.status === 401) {
+        thunkApi.dispatch(clearStore(err.response.data.msg));
+        return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
+      }
       return thunkApi.rejectWithValue(err.response?.data.msg);
     }
   }
@@ -115,6 +120,10 @@ export const showStats = createAsyncThunk(
       return resp.data as ApiStatsInfo;
     } catch (error) {
       const err = error as AxiosError<{ msg: string }>;
+      if (err.response?.status === 401) {
+        thunkApi.dispatch(clearStore(err.response.data.msg));
+        return thunkApi.rejectWithValue("Unauthorized! Logging Out...");
+      }
       return thunkApi.rejectWithValue(err.response?.data.msg);
     }
   }
