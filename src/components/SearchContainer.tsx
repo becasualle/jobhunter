@@ -9,9 +9,6 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 
 const SearchContainer = () => {
-  // for lazy loading
-  const [searchTerm, setSearchTerm] = useState({ name: "search", value: "" });
-
   const { isLoading, search, searchStatus, searchType, sort, sortOptions } =
     useAppSelector((store) => store.allJobs);
   const { jobTypeOptions, statusOptions } = useAppSelector(
@@ -20,8 +17,17 @@ const SearchContainer = () => {
 
   const jobTypeFilters = ["all", ...jobTypeOptions];
   const jobStatusFilters = ["all", ...statusOptions];
-  console.log("rendered");
   const dispatch = useAppDispatch();
+
+  // lazy loading search string
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const debounceId = setTimeout(() => {
+      dispatch(handleChange({ name: "search", value: searchTerm }));
+    }, 750);
+    return () => clearTimeout(debounceId);
+  }, [searchTerm, dispatch]);
 
   const handleSearch: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
@@ -31,7 +37,7 @@ const SearchContainer = () => {
     const value = e.target.value;
 
     if (name === "search") {
-      setSearchTerm({ name, value });
+      setSearchTerm(value);
       return;
     }
 
@@ -42,13 +48,6 @@ const SearchContainer = () => {
     e.preventDefault();
     dispatch(clearFilters());
   };
-  // lazy loading search string
-  useEffect(() => {
-    const debounceId = setTimeout(() => {
-      dispatch(handleChange({ name: "search", value: searchTerm.value }));
-    }, 500);
-    return () => clearTimeout(debounceId);
-  }, [searchTerm, dispatch]);
 
   return (
     <Wrapper>
@@ -59,7 +58,7 @@ const SearchContainer = () => {
           <FormRow
             type="text"
             name="search"
-            value={searchTerm.value}
+            value={searchTerm}
             handleChange={handleSearch}
           />
           {/* Search By Status */}
