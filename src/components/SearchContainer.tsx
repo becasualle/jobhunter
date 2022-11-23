@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 
 const SearchContainer = () => {
-  const { isLoading, search, searchStatus, searchType, sort, sortOptions } =
+  const { isLoading, searchStatus, searchType, sort, sortOptions } =
     useAppSelector((store) => store.allJobs);
   const { jobTypeOptions, statusOptions } = useAppSelector(
     (store) => store.job

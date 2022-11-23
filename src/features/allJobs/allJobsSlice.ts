@@ -83,6 +83,8 @@ const initialState: JobsInitialState = {
 
 export type FieldName = keyof JobsFiltersState;
 
+// trigger this reducer every time filters or sort is applied
+// useEffect calls inside JobsConainer, and reacts to dependencies from JobsInitialState here
 export const getAllJobs = createAsyncThunk(
   "allJobs/getJobs",
   async (_, thunkApi) => {
@@ -136,6 +138,7 @@ const allJobsSlice = createSlice({
       state.page = payload;
     },
     clearFilters: (state) => ({ ...state, ...initialFilterState }),
+    clearAllJobsState: () => initialState,
     showLoading: (state) => {
       state.isLoading = true;
     },
@@ -179,6 +182,7 @@ export const {
   handleChange,
   clearFilters,
   changePage,
+  clearAllJobsState,
 } = allJobsSlice.actions;
 
 export default allJobsSlice.reducer;

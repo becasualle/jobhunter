@@ -2,12 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import customFetch from "../../utils/axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { RootState } from "../../app/store";
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
 } from "../../utils/localStorage";
+import { clearAllJobsState } from "../allJobs/allJobsSlice";
+import { clearValues } from "../job/jobSlice";
 
 export interface User {
   name?: string;
@@ -90,6 +91,20 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const clearStore = createAsyncThunk(
+  "user/clearStore",
+  async (message: string, thunkApi) => {
+    try {
+      thunkApi.dispatch(logoutUser(message));
+      thunkApi.dispatch(clearAllJobsState());
+      thunkApi.dispatch(clearValues());
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject();
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -141,13 +156,15 @@ export const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, { payload: { user } }) => {
         state.isLoading = false;
         state.user = user;
-
         addUserToLocalStorage(user);
         toast.success("User Updated");
       })
       .addCase(updateUser.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload as string);
+      })
+      .addCase(clearStore.rejected, () => {
+        toast.error("there was an error");
       });
   },
 });
