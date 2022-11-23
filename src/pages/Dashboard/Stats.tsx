@@ -19,7 +19,11 @@ const Stats = () => {
   return (
     <>
       <StatsContainer />
-      {monthlyApplications.length && <ChartsContainer />}
+      {monthlyApplications.length ? (
+        <ChartsContainer />
+      ) : (
+        <h2 style={{ marginTop: "1.5rem" }}>No applications found</h2>
+      )}
     </>
   );
 };

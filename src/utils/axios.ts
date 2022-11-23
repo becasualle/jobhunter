@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { getUserFromLocalStorage } from "./localStorage";
+import { AsyncThunkPayloadCreator } from "@reduxjs/toolkit";
 
 const customFetch = axios.create({
   baseURL: "https://jobify-prod.herokuapp.com/api/v1/toolkit",
