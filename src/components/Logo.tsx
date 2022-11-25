@@ -1,11 +1,7 @@
-import logo from '../assets/images/logo.svg';
+import logo from "../assets/images/logo.svg";
 
-type Props = {}
+const Logo = () => {
+  return <img src={logo} alt="jobhunter logo" className="logo" />;
+};
 
-const Logo = (props: Props) => {
-    return (
-        <img src={logo} alt="jobhunter logo" className='logo' />
-    )
-}
-
-export default Logo
+export default Logo;

@@ -44,6 +44,9 @@ const Wrapper = styled.aside`
       position: sticky;
       top: 0;
     }
+    .logo {
+      width: 100%;
+    }
     .show-sidebar {
       margin-left: 0;
     }
