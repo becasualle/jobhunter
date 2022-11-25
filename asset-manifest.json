@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/jobhunter/static/css/main.0b6928cf.css",
-    "main.js": "/jobhunter/static/js/main.d927bb17.js",
+    "main.js": "/jobhunter/static/js/main.fa7a60a1.js",
     "static/media/logo.svg": "/jobhunter/static/media/logo.3a00709d80c4384d53115b3a27f89121.svg",
     "static/media/main.svg": "/jobhunter/static/media/main.d8c43e2bc688b998597a29f2cccdc694.svg",
     "static/media/not-found.svg": "/jobhunter/static/media/not-found.5cfa24fa5e3ca7dffe02f358358ea9df.svg",
     "index.html": "/jobhunter/index.html",
     "main.0b6928cf.css.map": "/jobhunter/static/css/main.0b6928cf.css.map",
-    "main.d927bb17.js.map": "/jobhunter/static/js/main.d927bb17.js.map"
+    "main.fa7a60a1.js.map": "/jobhunter/static/js/main.fa7a60a1.js.map"
   },
   "entrypoints": [
     "static/css/main.0b6928cf.css",
-    "static/js/main.d927bb17.js"
+    "static/js/main.fa7a60a1.js"
   ]
 }
