@@ -6,13 +6,13 @@ import {
   SharedLayout,
   Stats,
 } from "./pages/Dashboard";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer position="top-center" />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

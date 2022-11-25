@@ -8,6 +8,8 @@ It is a service that helps to manage process of searching job.
 - Search through list of created jobs using search input, filter by status and type, sorting
 - Edit and delete jobs
 - View stats by job status, explore the data using bar and area charts
+- Basic Authorization
+- Login as demo user to check out functionality
 
 ## Stack
 
