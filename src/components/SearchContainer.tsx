@@ -6,7 +6,7 @@ import {
   clearFilters,
 } from "../features/allJobs/allJobsSlice";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 const SearchContainer = () => {
   const { isLoading, searchStatus, searchType, sort, sortOptions } =
@@ -20,14 +20,17 @@ const SearchContainer = () => {
   const dispatch = useAppDispatch();
 
   // lazy loading search string
-  const [searchTerm, setSearchTerm] = useState("");
+  const [localSearch, setLocalSearch] = useState("");
 
+  // If value in search input changes (localSearch) we dispatch handleChange after 750ms
+  // if value changes again before 750ms, we clear previous timeout and create new
+  // if component unmounts, we just clear timeout
   useEffect(() => {
     const debounceId = setTimeout(() => {
-      dispatch(handleChange({ name: "search", value: searchTerm }));
+      dispatch(handleChange({ name: "search", value: localSearch }));
     }, 750);
     return () => clearTimeout(debounceId);
-  }, [searchTerm, dispatch]);
+  }, [localSearch, dispatch]);
 
   const handleSearch: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
@@ -35,12 +38,6 @@ const SearchContainer = () => {
     // if (isLoading) return;
     const name = e.target.name as FieldName;
     const value = e.target.value;
-
-    if (name === "search") {
-      setSearchTerm(value);
-      return;
-    }
-
     dispatch(handleChange({ name, value }));
   };
 
@@ -58,8 +55,8 @@ const SearchContainer = () => {
           <FormRow
             type="text"
             name="search"
-            value={searchTerm}
-            handleChange={handleSearch}
+            value={localSearch}
+            handleChange={(e) => setLocalSearch(e.target.value)}
           />
           {/* Search By Status */}
           <FormRowSelect

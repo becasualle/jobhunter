@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { getUserFromLocalStorage } from "./localStorage";
 
 const customFetch = axios.create({
