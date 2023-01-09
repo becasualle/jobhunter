@@ -1,7 +1,7 @@
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import styled from "styled-components";
-import { changePage, getAllJobs } from "../features/allJobs/allJobsSlice";
+import { changePage } from "../features/allJobs/allJobsSlice";
 
 const PageBtnContainer = () => {
   const { page, numOfPages } = useAppSelector((store) => store.allJobs);

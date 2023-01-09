@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   toggleSidebar,
-  logoutUser,
+  // logoutUser,
   clearStore,
 } from "../features/user/userSlice";
 
@@ -16,10 +16,10 @@ const Navbar = (props: Props) => {
   const dispatch = useAppDispatch();
   const [showLogout, setShowLogout] = useState(false);
 
-  const logout = () => {
-    dispatch(logoutUser("Logging out..."));
-    setShowLogout(false);
-  };
+  // const logout = () => {
+  //   dispatch(logoutUser("Logging out..."));
+  //   setShowLogout(false);
+  // };
 
   return (
     <Wrapper>

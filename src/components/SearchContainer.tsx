@@ -6,7 +6,7 @@ import {
   clearFilters,
 } from "../features/allJobs/allJobsSlice";
 import styled from "styled-components";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 
 const SearchContainer = () => {
   const { isLoading, searchStatus, searchType, sort, sortOptions } =
